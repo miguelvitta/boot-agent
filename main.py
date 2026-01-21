@@ -19,10 +19,13 @@ def main():
 
     client = genai.Client(api_key=api_key)
     messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
-    generate_content(client, messages, args.verbose, args.user_prompt)
+    if args.verbose:
+        print(f"User prompt: {args.user_prompt}\n")
+
+    generate_content(client, messages, args.verbose)
 
 
-def generate_content(client, messages, verbose, user_prompt):
+def generate_content(client, messages, verbose):
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=messages,
@@ -33,7 +36,6 @@ def generate_content(client, messages, verbose, user_prompt):
     if verbose:
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
         print("Response tokens:", response.usage_metadata.candidates_token_count)
-        print("User prompt:", user_prompt)
     print("Response:")
     print(response.text)
 
