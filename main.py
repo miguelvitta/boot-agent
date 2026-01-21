@@ -5,16 +5,16 @@ from google import genai
 
 
 def main():
+    parser = argparse.ArgumentParser(description="AI Code Assistant")
+    parser.add_argument("user_prompt", type=str, help="Prompt to send to Gemini")
+    args = parser.parse_args()
+
     load_dotenv()
     apiKey = os.environ.get("GEMINI_API_KEY")
     if not apiKey:
         raise RuntimeError("GEMINI_API_KEY not set")
 
     client = genai.Client(api_key=apiKey)
-
-    parser = argparse.ArgumentParser(description="Chatbot")
-    parser.add_argument("user_prompt", type=str, help="User promp")
-    args = parser.parse_args()
 
     response = client.models.generate_content(
         model="gemini-2.5-flash", contents=args.user_prompt
