@@ -1,7 +1,9 @@
-import os
 import argparse
+import os
+
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 
 def main():
@@ -10,23 +12,25 @@ def main():
     args = parser.parse_args()
 
     load_dotenv()
-    apiKey = os.environ.get("GEMINI_API_KEY")
-    if not apiKey:
-        raise RuntimeError("GEMINI_API_KEY not set")
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY environment variable not set")
 
-    client = genai.Client(api_key=apiKey)
+    client = genai.Client(api_key=api_key)
+    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
+    generate_content(client, messages)
 
+
+def generate_content(client, messages):
     response = client.models.generate_content(
-        model="gemini-2.5-flash", contents=args.user_prompt
+        model="gemini-2.5-flash",
+        contents=messages,
     )
-
     if not response.usage_metadata:
         raise RuntimeError("Gemini API response appears to be malformed")
 
-    metadata = response.usage_metadata
-
-    print("Prompt tokens:", metadata.prompt_token_count)
-    print("Response tokens:", metadata.candidates_token_count)
+    print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+    print("Response tokens:", response.usage_metadata.candidates_token_count)
     print("Response:")
     print(response.text)
 
