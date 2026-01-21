@@ -1,6 +1,5 @@
-def main():
-    print("Hello from boot-agent!")
+import os
+from dotenv import load_dotenv
 
-
-if __name__ == "__main__":
-    main()
+load_dotenv()
+api_key = os.environ.get("GEMINI_API_KEY")
