@@ -4,7 +4,7 @@ from functions.get_file_content import get_file_content
 
 def test():
     result = get_file_content("calculator", "lorem.txt")
-    print("Result for lorem.txt:")
+    print("Result for 'lorem.txt':")
     # 1) length is greater than MAX_CHARS (because we added the suffix)
     assert len(result) > MAX_CHARS
 
