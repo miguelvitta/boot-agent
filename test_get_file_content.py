@@ -16,7 +16,7 @@ def test():
     print("")
 
     result = get_file_content("calculator", "main.py")
-    print("Result for main.py:")
+    print("Result for 'main.py':")
     print(result)
     print("")
 
@@ -25,7 +25,7 @@ def test():
     print(result)
 
     result = get_file_content("calculator", "/bin/cat")
-    print("Result for '/bin/cat' cat tool:")
+    print("Result for '/bin/cat' 'cat' tool:")
     print(result)
 
     result = get_file_content("calculator", "pkg/does_not_exist.py")
