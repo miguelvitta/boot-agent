@@ -1,0 +1,2 @@
+# limit of chars to read and compose the question
+MAX_CHARS = 10000
